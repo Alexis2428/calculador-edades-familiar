@@ -1,0 +1,22 @@
+{
+  "name": "calculador-edades-familiar",
+  "version": "1.0.0",
+  "description": "calculara el mayor, el menor y el promedio de edades del grupo familiar",
+  "main": "main.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexis2428/calculador-edades-familiar.git"
+  },
+  "author": "Alexis Landa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexis2428/calculador-edades-familiar/issues"
+  },
+  "homepage": "https://github.com/Alexis2428/calculador-edades-familiar#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}
