@@ -1,3 +1,18 @@
+const $botonContinuar = document.querySelector('button[name=continuar]');
+$botonContinuar.onclick = function(event) {
+    event.preventDefault();
+
+    const $cantidadIntegrantes = document.querySelector('#cantidad-integrantes');
+
+        borrarIntegrantesAnteriores();
+        crearIntegrantes(Number($cantidadIntegrantes.value));
+}
+
+const $botonCalcular = document.querySelector('button[name=calcular]');
+$botonCalcular.onclick = obtenerRespuestas;
+
+document.querySelector('button[name=reiniciar]').onclick = reiniciar;
+
 function crearIntegrantes(cantidadIntegrantes) {
     if (0 < cantidadIntegrantes) {
         mostrarBotonCalcular();
@@ -62,6 +77,13 @@ function obtenerEdades($edades) {
 
 function obtenerRespuesta(tipo, valor) {
     document.querySelector(`#edad-${tipo}`).textContent = valor;
+}
+
+function reiniciar() {
+    borrarIntegrantesAnteriores();
+    ocultarRespuestas();
+    ocultarBotonCalcular();
+    ocultarBotonReiniciar();
 }
 
 function mostrarBotonCalcular() {
