@@ -55,6 +55,7 @@ function borrarIntegrantesAnteriores() {
 function obtenerRespuestas() {
     const $edades = document.querySelectorAll('.integrante input');
 
+    if (validarEdades($edades)) {
         const edades = obtenerEdades($edades);
 
         obtenerRespuesta('mayor', obtenerNumeroMayor(edades));
@@ -63,6 +64,7 @@ function obtenerRespuestas() {
 
         mostrarRespuestas();
         mostrarBotonReiniciar();
+    }
 }
 
 function obtenerEdades($edades) {
@@ -81,6 +83,7 @@ function obtenerRespuesta(tipo, valor) {
 
 function reiniciar() {
     borrarIntegrantesAnteriores();
+    borrarErroresAnteriores();
     ocultarRespuestas();
     ocultarBotonCalcular();
     ocultarBotonReiniciar();
@@ -108,5 +111,104 @@ function mostrarBotonReiniciar() {
 
 function ocultarBotonReiniciar() {
     document.querySelector('button[name=reiniciar]').classList.add('oculto');
+}
+
+function validarEdades($edades) {
+    const errores = {};
+
+    for (let i = 0; i < $edades.length; i++) {
+        errores[i] = validarEdad($edades[i].value);
+    }
+
+    const sonValidas = 0 === manejarErrores(errores, $edades);
+
+    return sonValidas;
+}
+
+function validarEdad(edad) {
+    if ('' === edad) {
+        return 'El campo edad no puede estar vacio';
+    }
+
+    if (!/^[0-9]+$/.test(edad)) {
+        return 'El campo edad solo admite números enteros';
+    }
+
+    if (!/^[0-9]{1,3}$/.test(edad)) {
+        return 'El campo edad solo admite edades validas (entre 1 y 3 caracteres)';
+    }
+
+    return '';
+}
+
+function manejarErrores(errores, $edades) {
+    let cantidadErrores = 0;
+
+    Object.keys(errores).forEach(function(key) {
+        const error = errores[key];
+
+        if (error) {
+            cantidadErrores++
+            $edades[key].classList.add('error');
+
+            if (!comprobarExisteError(error)) {
+                crearError(error);
+            }
+        } else {
+            $edades[key].classList.remove('error');
+        }
+    })
+
+    borrarErroresCorregidos(errores);
+
+    return cantidadErrores;
+}
+
+function crearError(error) {
+    const $error = document.createElement('li');
+    $error.className = 'list-group-item';
+    $error.innerText = error;
+
+    document.querySelector('#errores').appendChild($error);
+}
+
+function comprobarExisteError(error) {
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        if (error === $errores[i].innerText) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function borrarErroresCorregidos(errores) {
+    const valorErrores = Object.values(errores);
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        let existeError = false;
+
+        for (let j = 0; j < valorErrores.length; j++) {
+            if ($errores[i].innerText === valorErrores[j]) {
+                existeError = true;
+                break;
+            }
+        }
+        
+        if (!existeError) {
+            $errores[i].remove();
+        }
+    }
+}
+
+function borrarErroresAnteriores() {
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        $errores[i].remove();
+    }
 }
 
