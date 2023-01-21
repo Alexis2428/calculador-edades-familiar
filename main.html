@@ -9,5 +9,28 @@
     <title>Calculador de edades del grupo familiar</title>
 </head>
 <body>
+    <form class="container">
+        <div class="row mb-1">
+            <div class="form-floating col-5">
+                <input type="number" class="form-control" id="cantidad-integrantes" placeholder="integrantes">
+                <label for="cantidad-integrantes">¿Cuantos integrantes hay en el grupo familiar?</label>
+            </div>
+            <button type="submit" class="btn btn-outline-primary col-1" name="continuar">Continuar</button>
+        </div>
+
+        <div id="integrantes" class="col-5"></div>
+
+        <ul class="list-group list-group-flush" id="errores"></ul>
+
+        <button type="button" class="btn btn-outline-primary oculto" name="calcular"></button>
+
+        <div id="respuestas" class="oculto">
+            <p>La mayor edad del grupo familiar es ... <strong id="edad-mayor"></strong></p>
+            <p>La menor edad del grupo familiar es ... <strong id="edad-menor"></strong></p>
+            <p>El promedio de edades del grupo familiar es ... <strong id="edad-promedio"></strong></p>
+        </div>
+
+        <button type="reset" class="btn btn-outline-secondary oculto" name="reiniciar">Reiniciar</button>
+    </form>
 </body>
 </html>
