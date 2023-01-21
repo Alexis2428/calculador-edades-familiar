@@ -4,8 +4,10 @@ $botonContinuar.onclick = function(event) {
 
     const $cantidadIntegrantes = document.querySelector('#cantidad-integrantes');
 
+    if (validarCantidadIntegrantes($cantidadIntegrantes)) {
         borrarIntegrantesAnteriores();
         crearIntegrantes(Number($cantidadIntegrantes.value));
+    }
 }
 
 const $botonCalcular = document.querySelector('button[name=calcular]');
@@ -212,3 +214,49 @@ function borrarErroresAnteriores() {
     }
 }
 
+function validarCantidadIntegrantes($cantidadIntegrantes) {
+    const error = validarNumero($cantidadIntegrantes.value);
+
+    const esValido = manejarError(error, $cantidadIntegrantes);
+
+    return esValido;
+}
+
+function validarNumero(cantidadIntegrantes) {
+    if ('' === cantidadIntegrantes) {
+        return 'El campo cantidad-integrantes no debe estar vacio';
+    }
+
+    if (!/^[0-9]+$/.test(cantidadIntegrantes)) {
+        return 'El campo cantidad-integrantes solo acepta números enteros';
+    }
+
+    return '';
+}
+
+function manejarError(error, $cantidadIntegrantes) {
+    let noHayError = true;
+
+    if (error) {
+        noHayError = false;
+        $cantidadIntegrantes.classList.add('error');
+
+        if (!comprobarExisteError(error)) {
+            crearError(error);
+        }
+
+    } else {
+        $cantidadIntegrantes.classList.remove('error');
+    }
+
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        if ($errores[i].textContent != error) {
+            $errores[i].remove();
+            break;
+        }
+    }
+
+    return noHayError;
+}
