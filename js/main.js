@@ -37,6 +37,33 @@ function borrarIntegrantesAnteriores() {
     }
 }
 
+function obtenerRespuestas() {
+    const $edades = document.querySelectorAll('.integrante input');
+
+        const edades = obtenerEdades($edades);
+
+        obtenerRespuesta('mayor', obtenerNumeroMayor(edades));
+        obtenerRespuesta('menor', obtenerNumeroMenor(edades));
+        obtenerRespuesta('promedio', obtenerPromedio(edades).toFixed(2));
+
+        mostrarRespuestas();
+        mostrarBotonReiniciar();
+}
+
+function obtenerEdades($edades) {
+    const edades = [];
+
+    for (let i = 0; i < $edades.length; i++) {
+        edades.push(Number($edades[i].value));
+    }
+
+    return edades;
+}
+
+function obtenerRespuesta(tipo, valor) {
+    document.querySelector(`#edad-${tipo}`).textContent = valor;
+}
+
 function mostrarBotonCalcular() {
     document.querySelector('button[name=calcular]').classList.remove('oculto');
 }
